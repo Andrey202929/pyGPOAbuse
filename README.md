@@ -1,6 +1,7 @@
 # pyGPOAbuse
 
 ## pyGPOAbuseFiltered Additions
+- DISCLAIMER: This was only tested briefly in a local AD environment I take no responsibility for any unprecedented behavior or malfunctioning, it is provided as-is, for authorized testing only, entirely at your own risk.
 - Now supports filtered targeting of users or hosts similar to SharpGPOAbuse
 - Scenario: GPO is linked to the Active-Directory Domain therefore tasks would be applied to all affected objects within said domain (users/hosts) which would leave a ton of unnecesary noise and artifacts. Therefore a more targeted approach is preferred executing commands on specifc targets e.g. the domain controller.
 ```bash

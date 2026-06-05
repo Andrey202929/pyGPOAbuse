@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 
 class ScheduledTask:
-    def __init__(self, gpo_type="computer", name="", mod_date="", description="", powershell=False, command="", old_value="",, filter_enabled=False, target_dns_name="", target_username="", target_user_sid=""):
+    def __init__(self, gpo_type="computer", name="", mod_date="", description="", powershell=False, command="", old_value="", filter_enabled=False, target_dns_name="", target_username="", target_user_sid=""):
         self._type = gpo_type
 
         if name:

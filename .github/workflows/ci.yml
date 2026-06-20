@@ -3,11 +3,14 @@ name: CI
 on:
   push:
     branches:
+      - master
       - main
       - add-ci-for-smabot
   pull_request:
     branches:
+      - master
       - main
+  workflow_dispatch:
 
 jobs:
   build:

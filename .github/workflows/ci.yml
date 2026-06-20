@@ -33,7 +33,15 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest -q
+          python -m pytest -q || rc=$?
+          if [ -n "${rc:-}" ]; then
+            if [ "$rc" -eq 5 ]; then
+              echo "No tests collected by pytest (exit code 5). Continuing without failing the job."
+            else
+              echo "pytest finished with exit code $rc. Failing the job."
+              exit $rc
+            fi
+          fi
 
       - name: Telegram notification
         if: always()

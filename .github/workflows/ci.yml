@@ -45,6 +45,7 @@ jobs:
 
       - name: Telegram notification (curl)
         if: always()
+        continue-on-error: true
         run: |
           if [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] || [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
             echo "Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret; skipping Telegram notification."
@@ -54,7 +55,6 @@ jobs:
             if echo "$resp" | grep -q '"ok":true'; then
               echo "Telegram message sent."
             else
-              echo "Telegram API returned error."
-              exit 1
+              echo "Telegram API returned error: $resp"
             fi
           fi

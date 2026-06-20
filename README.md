@@ -76,11 +76,15 @@ Then execute tool with `--linux-exec` argument.
 
 ```
 ./pygpoabuse.py DOMAIN/user:password -gpo-id "12345677-ABCD-9876-ABCD-123456789012" --linux-exec /path/to/executable
+
 ```
 
 ![Example](https://github.com/user-attachments/assets/173baf0b-e502-4424-bdf6-f97ed0e042af)
 
+
 ## Credits
+
+<!-- trigger-ci -->
 
 * [@pkb1s](https://twitter.com/pkb1s) for [SharpGPOAbuse](https://github.com/FSecureLABS/SharpGPOAbuse)
 * [@airman604](https://twitter.com/airman604) for [schtask_now.py](https://github.com/airman604/schtask_now)

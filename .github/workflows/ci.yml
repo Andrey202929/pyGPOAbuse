@@ -47,14 +47,21 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
+          echo "Attempting to send Telegram notification..."
           if [ -z "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] || [ -z "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
             echo "Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret; skipping Telegram notification."
+            exit 0
+          fi
+
+          # Send message and print raw response for debugging
+          resp=$(curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="Repo: ${{ github.repository }} | Workflow: ${{ github.workflow }} | Job: ${{ job.name }} | Status: ${{ job.status }} | Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}")
+
+          echo "Telegram response: $resp"
+          if echo "$resp" | grep -q '"ok":true'; then
+            echo "Telegram message sent."
           else
-            resp=$(curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" -d text="Repo: ${{ github.repository }} | Workflow: ${{ github.workflow }} | Job: ${{ job.name }} | Status: ${{ job.status }} | Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" )
-            echo "Telegram response: $resp"
-            if echo "$resp" | grep -q '"ok":true'; then
-              echo "Telegram message sent."
-            else
-              echo "Telegram API returned error: $resp"
-            fi
+            echo "Telegram API returned error."
+            echo "$resp"
           fi
